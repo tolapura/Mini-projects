@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CMSC125 Lab1</title>
+	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="container">
+			<div class="row">
+				<div class="col-full title-area">
+					<p class="title">Multiprogramming With Time-Sharing</p>
+					<p class="instruction"></p>
+					<div class="input-field-box">
+						<label for="users">Users</label>
+						<input class="input-field" id="users" v-model.number="users" type="number" :disabled="startBtn == 0" min=1 max=30 placeholder="1">
+					</div>
+					<div class="input-field-box">
+						<label for="resources">Resources</label>
+						<input class="input-field" id="resources" v-model.number="resources" type="number" :disabled="startBtn == 0" min=1 max=30 placeholder="1">
+					</div>
+					<button v-on:click="submit()" :disabled="startBtn == 0">Start</button>
+					<button v-on:click="random()" :disabled="startBtn == 0">Random</button>
+					<button v-on:click="reset()" :disabled="startBtn == 1">Reset</button>
+					<p class="timer">{{ time }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-left cards">
+					<div class="users-area">
+						<p class="container-header">Users</p>
+					<ul class="users-list">
+					    <li v-for="n in users">
+					    	<img class="avatars" v-bind:src="'images/users/'+n+'.png'">
+					    	<p class="avatars-name">User {{ n }}</p>
+					    	<!-- <p class="resource-number">RNo. {{ arrayOfUsers[n][1] }}</p> -->
+					    </li>
+					</ul>
+
+					</div>
+				</div>
+				<div class="col-right cards">
+					<div class="resources-area">
+						<p class="container-header">Resources</p>
+						<ul class="users-list">
+					    <li v-for="n in resources">
+					    	<div class="resource-container">
+						    	<p class="resource-name">Resource {{ n }}</p>
+					    		<p v-if="started" class="time-left">Time Left: {{resourceTimeLeft(n)}}</p>
+						    	<div class="resource-img-box">
+						    		<img v-if="started && arrayIsEmpty(n) && isNotWaiting(n)" class="resources-img" v-bind:src="'images/users/'+currentUser(n)+'.png'">
+						    		<img class="user-turn-img" src="images/resource.png">
+						    	</div>
+						    	<p v-if="started && arrayIsEmpty(n) && isNotWaiting(n)" class="avatars-name-1">User {{currentUserDetails(n)}}</p>
+						    	<p v-if="started && arrayIsEmpty(n) && !isNotWaiting(n)" class="avatars-name-1">Waiting User {{getWaitingTime(n)}}</p>
+						    	<p v-if="started && !arrayIsEmpty(n)" class="avatars-name-1">Free</p>
+						    	<ul v-if="started" class="pending-list">
+						    		<!-- do something v-for -->
+						    		<li class="pending-class" v-for="i in removeFirstElement(n)">
+						    			<img class="pending-image" v-bind:src="'images/users/'+i.number+'.png'" alt="">
+						    		</li>
+						    	</ul>
+					    	</div>
+					    </li>
+					</ul>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCyC_ZRLNtos94lJ10HwRVuuti1Z1tD-J8",
+    authDomain: "time-sharing.firebaseapp.com",
+    databaseURL: "https://time-sharing.firebaseio.com",
+    projectId: "time-sharing",
+    storageBucket: "time-sharing.appspot.com",
+    messagingSenderId: "929751743740"
+  };
+  firebase.initializeApp(config);
+</script>
+
+	<script src="js/main.js"></script>
+</body>
+</html>

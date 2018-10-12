@@ -1,0 +1,52 @@
+@media screen and (max-width: 768px) {
+	.users-area {
+		height: 200px;
+	}
+	.users-area, .resources-area, .title-area {
+		 margin: 20px;
+   		 margin-bottom: 0;
+	}
+	.users-area .users-list {
+		height: 130px;
+	}
+	.title-area {
+		margin-bottom: 0;
+	}
+	.instruction {
+    	width: 100%;
+	}
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+  .col-left {
+    -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .col-right {
+    -ms-flex: 0 0 75%;
+        flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .col-full {
+    -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
